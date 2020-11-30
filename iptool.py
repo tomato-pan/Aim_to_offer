@@ -6,6 +6,7 @@ from PyQt5.QtCore import QCoreApplication
 import re
 import time
 
+
 class Example(QWidget):
 
     def __init__(self):
@@ -33,16 +34,16 @@ class Example(QWidget):
     @staticmethod
     def timeToint(stime):
         # print(ip)
-        fa = time.strptime(stime,"%Y-%m-%d %H:%M:%S")
+        fa = time.strptime(stime, "%Y-%m-%d %H:%M:%S")
         time1 = time.mktime(fa)
-        return int(time1*1000)
+        return int(time1 * 1000)
 
     @staticmethod
     def intTotime(num):
-        num=num/1000
+        num = num / 1000
         print(num)
 
-        stime = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(num))
+        stime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(num))
         return stime
 
     def initUI(self):
@@ -143,7 +144,7 @@ class Example(QWidget):
     def get_int_time(self):
         if self.TintValue.text():
             Int = self.TintValue.text()
-            if re.match(r"^\d+$", Int) and 0<=int(Int)<=2147483648999:
+            if re.match(r"^\d+$", Int) and 0 <= int(Int) <= 2147483648999:
                 Time = Example.intTotime(int(Int))
                 self.TimeValue.setText(Time)
             else:
@@ -151,6 +152,7 @@ class Example(QWidget):
                 self.TintValue.clear()
         else:
             QMessageBox.critical(self, "错误", "请输入TInt！")
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
