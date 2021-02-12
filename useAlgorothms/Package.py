@@ -26,7 +26,11 @@ def dp_lcs(str1,str2):
         for j in range(len(str2)):
             if str1[i]==str2[j]:
                 dp[i][j]=dp[i-1][j]+1
-                lcs+=str1[i]
+                # if str1[i] repeat
+                if str1[i] in lcs:
+                    continue
+                else:
+                    lcs+=str1[i]
             else:
                 dp[i][j]=max(dp[i-1][j],dp[i][j-1])
     for j in dp:
@@ -40,4 +44,4 @@ if __name__ == '__main__':
     volume = 4
     n = 3
     dp = dp_package(volume, n)
-    dp2 = dp_lcs("blue","clues")
+    dp2 = dp_lcs("bluess","clues")
