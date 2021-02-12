@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import FastAPI,Form
+from fastapi import FastAPI, Form
 from starlette.templating import Jinja2Templates
 from starlette.requests import Request
 import uvicorn
@@ -17,7 +17,7 @@ async def read_home(request: Request):
 async def up_user_info(request: Request, username: str = Form(...), password: str = Form(...)):
     print(username)
     print(password)
-    return templates.TemplateResponse("index.html",{"request": request, "username": username, "password": password})
+    return templates.TemplateResponse("index.html", {"request": request, "username": username, "password": password})
 
 
 if __name__ == '__main__':
