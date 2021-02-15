@@ -14,12 +14,12 @@ async def read_home(request: Request):
     return templates.TemplateResponse("filepost.html", {"request": request})
 
 
-@app.post("/user/")
-async def up_user_info(request: Request, username: str = Form(...), password: str = Form(...)):
-    print(username)
-    print(password)
-    return templates.TemplateResponse("index.html", {"request": request, "username": username, "password": password})
-
+# @app.post("/user/")
+# async def up_user_info(request: Request, username: str = Form(...), password: str = Form(...)):
+#     print(username)
+#     print(password)
+#     return templates.TemplateResponse("index.html", {"request": request, "username": username, "password": password})
+#
 
 @app.post("/files/")
 async def files(request: Request,
