@@ -44,4 +44,4 @@ if __name__ == '__main__':
     volume = 4
     n = 3
     dp = dp_package(volume, n)
-    dp2 = dp_lcs("bluess","clues")
+    dp2 = dp_lcs("bluess","cluess")
