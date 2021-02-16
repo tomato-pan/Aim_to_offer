@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from enum import Enum
 from typing import Optional
 from pydantic import BaseModel
@@ -21,6 +21,15 @@ class Name(str, Enum):
     c = "z2"
 
 
+# 查询参数和字符串校验&添加正则表达式
+@app.get("/items1")
+async def items1(q: Optional[str] = Query(None, min_length=3, max_length=50,regex=r"^a")):
+    res = {"message": fake_items_db}
+    if q:
+        res.update({"q": q})
+    return res
+
+
 @app.get("/")
 async def read():
     return {
@@ -28,11 +37,14 @@ async def read():
     }
 
 
+# BaseModel参数
 @app.post("/item/")
 async def create_item(item: Item):
+    print(item.dict())
     return item
 
 
+# BaseModel参数
 @app.put("/items/{item_id}")
 async def read_user_item(
         item_id: int, item: Item, q: Optional[str] = None
@@ -44,6 +56,7 @@ async def read_user_item(
     return item
 
 
+# 查询参数
 @app.get("/users/{user_id}/items/{item_id}")
 async def read_user_item(
         user_id: int, item_id: str, q: Optional[str] = None, short: bool = False
@@ -58,6 +71,7 @@ async def read_user_item(
     return item
 
 
+# 查询参数含默认参数
 @app.get("/ab/")
 async def ab(A: int = 0, B: int = 20):
     return {
