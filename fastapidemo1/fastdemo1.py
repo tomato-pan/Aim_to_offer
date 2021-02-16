@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Query
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -21,13 +21,20 @@ class Name(str, Enum):
     c = "z2"
 
 
-# 查询参数和字符串校验&添加正则表达式
+# 查询参数和字符串校验&添加正则表达式, 必需值则 None->...
 @app.get("/items1")
-async def items1(q: Optional[str] = Query(None, min_length=3, max_length=50,regex=r"^a")):
+async def items1(q: Optional[str] = Query(None, min_length=3, max_length=50, regex=r"^a")):
     res = {"message": fake_items_db}
     if q:
         res.update({"q": q})
     return res
+
+
+# 查询参数列表 / 多个值
+@app.get("/items1")
+async def items1(q: Optional[List[str]] = Query(["foo","bar"])):
+    query = {"message": q}
+    return query
 
 
 @app.get("/")
