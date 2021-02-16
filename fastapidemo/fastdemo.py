@@ -9,18 +9,12 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/")
-async def read_home(request: Request):
-    return templates.TemplateResponse("filepost.html", {"request": request})
-
-
 # @app.post("/user/")
 # async def up_user_info(request: Request, username: str = Form(...), password: str = Form(...)):
 #     print(username)
 #     print(password)
 #     return templates.TemplateResponse("index.html", {"request": request, "username": username, "password": password})
 #
-
 @app.post("/files/")
 async def files(request: Request,
                 files_list: List[bytes] = File(...),
@@ -28,19 +22,24 @@ async def files(request: Request,
     return templates.TemplateResponse("index.html",
                                       {"request": request,
                                        "file_sizes": [len(file) for file in files_list],
-                                       "filename": [file.filename for file in files_name]})
+                                       "filenames": [file.filename for file in files_name]})
 
 
 @app.post("/create_file/")
 async def create_file(request: Request,
                       file: bytes = File(...),
                       fileb: UploadFile = File(...),
-                      notes : str = Form(...)):
+                      notes: str = Form(...)):
     return templates.TemplateResponse("index.html",
                                       {"request": request,
                                        "file_size": len(file),
                                        "notes": notes,
                                        "fileb_content_type": fileb.content_type})
+
+
+@app.get("/")
+async def read_home(request: Request):
+    return templates.TemplateResponse("filepost.html", {"request": request})
 
 
 if __name__ == '__main__':
