@@ -2,9 +2,17 @@ import uvicorn
 from fastapi import FastAPI
 from enum import Enum
 from typing import Optional
+from pydantic import BaseModel
 
 app = FastAPI()
 fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+
+
+class Item(BaseModel):
+    name: str
+    description: str = None
+    price: float
+    tax: float = None
 
 
 class Name(str, Enum):
@@ -19,9 +27,26 @@ async def read():
         "message": 123
     }
 
+
+@app.post("/item/")
+async def create_item(item: Item):
+    return item
+
+
+@app.put("/items/{item_id}")
+async def read_user_item(
+        item_id: int, item: Item, q: Optional[str] = None
+):
+    item = {"item_id": item_id, **item.dict()}
+    if q:
+        item.update({"q": q})
+    print(item)
+    return item
+
+
 @app.get("/users/{user_id}/items/{item_id}")
 async def read_user_item(
-    user_id: int, item_id: str, q: Optional[str] = None, short: bool = False
+        user_id: int, item_id: str, q: Optional[str] = None, short: bool = False
 ):
     item = {"item_id": item_id, "owner_id": user_id}
     if q:
@@ -31,6 +56,7 @@ async def read_user_item(
             {"description": "This is an amazing item that has a long description"}
         )
     return item
+
 
 @app.get("/ab/")
 async def ab(A: int = 0, B: int = 20):
