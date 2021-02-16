@@ -18,11 +18,13 @@ templates = Jinja2Templates(directory="templates")
 @app.post("/files/")
 async def files(request: Request,
                 files_list: List[bytes] = File(...),
-                files_name: List[UploadFile] = File(...)):
+                files_name: List[UploadFile] = File(...), ):
     return templates.TemplateResponse("index.html",
                                       {"request": request,
                                        "file_sizes": [len(file) for file in files_list],
-                                       "filenames": [file.filename for file in files_name]})
+                                       "filenames": [file.filename for file in files_name]
+                                       }
+                                      )
 
 
 @app.post("/create_file/")
@@ -34,11 +36,13 @@ async def create_file(request: Request,
                                       {"request": request,
                                        "file_size": len(file),
                                        "notes": notes,
-                                       "fileb_content_type": fileb.content_type})
+                                       "fileb_content_type": fileb.content_type
+                                       }
+                                      )
 
 
 @app.get("/")
-async def read_home(request: Request):
+async def main(request: Request):
     return templates.TemplateResponse("filepost.html", {"request": request})
 
 
