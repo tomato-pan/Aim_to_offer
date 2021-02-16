@@ -22,7 +22,7 @@ class Name(str, Enum):
 
 
 # 查询参数和字符串校验&添加正则表达式, 必需值则 None->...
-@app.get("/items1")
+@app.get("/items1/")
 async def items1(q: Optional[str] = Query(None, min_length=3, max_length=50, regex=r"^a")):
     res = {"message": fake_items_db}
     if q:
@@ -30,11 +30,31 @@ async def items1(q: Optional[str] = Query(None, min_length=3, max_length=50, reg
     return res
 
 
-# 查询参数列表 / 多个值
-@app.get("/items1")
-async def items1(q: Optional[List[str]] = Query(["foo","bar"])):
+# 查询参数列表 / 多个值, 别名：alias Query(None, alias="qq")
+@app.get("/items2/")
+async def items2(q: Optional[List[str]] = Query(["foo", "bar"])):
     query = {"message": q}
     return query
+
+
+# 弃用参数
+@app.get("/items3/")
+async def read_items(
+        q: Optional[str] = Query(
+            None,
+            alias="item-query",
+            title="Query string",
+            description="Query string for the items to search in the database that have a good match",
+            min_length=3,
+            max_length=50,
+            regex="^fixedquery$",
+            deprecated=True,  # 弃用参数标识
+        )
+):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        results.update({"q": q})
+    return results
 
 
 @app.get("/")
