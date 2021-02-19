@@ -116,11 +116,11 @@ class Example(QWidget):
     def get_byte(self):
         if self.ByteValue.text():
             Byte = self.ByteValue.text()  # 获取文本框byte
-            if int(Byte):
+            try:
                 Byte=int(Byte)
                 MB = Byte/1024/1024
                 self.MbValue.setText(str(round(MB,2)))
-            else:
+            except:
                 QMessageBox.critical(self, "错误", "请输入正确byte数！")
                 self.ByteValue.clear()
         else:
@@ -129,11 +129,11 @@ class Example(QWidget):
     def get_mb(self):
         if self.MbValue.text():
             Mb = self.MbValue.text()  # 获取文本框MB
-            if int(Mb):
-                Mb = int(Mb)
+            try:
+                Mb = float(Mb)
                 Byte = Mb*1024 * 1024
                 self.ByteValue.setText(str(Byte))
-            else:
+            except:
                 QMessageBox.critical(self, "错误", "请输入正确MB数！")
                 self.ByteValue.clear()
         else:
