@@ -18,7 +18,7 @@ class Solution(object):
         self.invertTree(root.right)
         return root
 
-    def print_ord(self, root):
+    def print_pre_ord(self, root):
         r = []
         while root is not None or len(r) > 0:
             while root is not None:
@@ -29,7 +29,7 @@ class Solution(object):
                 root = r.pop()
                 root = root.right
 
-    def print_ord1(self, root):
+    def print_pre_ord1(self, root):
         if root is None: return
         print(root.val)
         self.print_ord1(root.left)
