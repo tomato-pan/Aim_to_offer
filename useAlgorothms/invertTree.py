@@ -19,14 +19,22 @@ class Solution(object):
         return root
 
     def print_ord(self, root):
-        r = root
-        root_r = root.right
-        while root is not None:
-            print(root.val)
-            root = root.left
-            if root_r is not None:
-                print(root_r.val)
-                root_r = root_r.right
+        r = []
+        while root is not None or len(r) > 0:
+            while root is not None:
+                print(root.val)
+                r.append(root)
+                root = root.left
+            if len(r) > 0:
+                root = r.pop()
+                root = root.right
+
+    def print_ord1(self, root):
+        if root is None: return
+        print(root.val)
+        self.print_ord1(root.left)
+        self.print_ord1(root.right)
+        return root
 
 
 if __name__ == '__main__':
@@ -39,5 +47,5 @@ if __name__ == '__main__':
     root.right.right = TreeNode(val=9)
     solution = Solution()
     invert = solution.invertTree(root)
-    solution.print_ord(invert)
+    solution.print_ord1(invert)
     print(invert)
