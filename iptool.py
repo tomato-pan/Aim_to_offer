@@ -57,6 +57,10 @@ class Example(QWidget):
         self.cal2Button.clicked.connect(self.get_time)
         self.cal3Button = QPushButton("int_to_time")
         self.cal3Button.clicked.connect(self.get_int_time)
+        self.cal4Button = QPushButton("Byte_to_MB")
+        self.cal4Button.clicked.connect(self.get_byte)
+        self.cal5Button = QPushButton("MB_to_Byte")
+        self.cal5Button.clicked.connect(self.get_mb)
         self.cancelButton = QPushButton("退出", self)
         self.cancelButton.clicked.connect(QCoreApplication.instance().quit)
 
@@ -68,6 +72,11 @@ class Example(QWidget):
         self.TimeValue = QLineEdit(self)
         TintLabel = QLabel("Tint:")
         self.TintValue = QLineEdit(self)
+        ByteLabel = QLabel("Byte:")
+        self.ByteValue = QLineEdit(self)
+        MbLabel = QLabel("MB:")
+        self.MbValue = QLineEdit(self)
+
 
         layout.addWidget(IPLabel, 1, 0)
         layout.addWidget(self.IpValue, 1, 1)
@@ -77,12 +86,18 @@ class Example(QWidget):
         layout.addWidget(TimeLabel, 3, 0)
         layout.addWidget(self.TintValue, 4, 1)
         layout.addWidget(TintLabel, 4, 0)
+        layout.addWidget(self.ByteValue, 5, 1)
+        layout.addWidget(ByteLabel, 5, 0)
+        layout.addWidget(self.MbValue, 6, 1)
+        layout.addWidget(MbLabel, 6, 0)
 
         layout.addWidget(self.calButton, 1, 2)
         layout.addWidget(self.cal1Button, 2, 2)
         layout.addWidget(self.cal2Button, 3, 2)
         layout.addWidget(self.cal3Button, 4, 2)
-        layout.addWidget(self.cancelButton, 5, 0)
+        layout.addWidget(self.cal4Button, 5, 2)
+        layout.addWidget(self.cal5Button, 6, 2)
+        layout.addWidget(self.cancelButton, 7, 1)
         self.setLayout(layout)
 
         self.show()
@@ -97,6 +112,32 @@ class Example(QWidget):
             event.accept()
         else:
             event.ignore()
+
+    def get_byte(self):
+        if self.ByteValue.text():
+            Byte = self.ByteValue.text()  # 获取文本框byte
+            try:
+                Byte=int(Byte)
+                MB = Byte/1024/1024
+                self.MbValue.setText(str(round(MB,2)))
+            except:
+                QMessageBox.critical(self, "错误", "请输入正确byte数！")
+                self.ByteValue.clear()
+        else:
+            QMessageBox.critical(self, "错误", "请输入byte数！")
+
+    def get_mb(self):
+        if self.MbValue.text():
+            Mb = self.MbValue.text()  # 获取文本框MB
+            try:
+                Mb = float(Mb)
+                Byte = Mb*1024 * 1024
+                self.ByteValue.setText(str(Byte))
+            except:
+                QMessageBox.critical(self, "错误", "请输入正确MB数！")
+                self.ByteValue.clear()
+        else:
+            QMessageBox.critical(self, "错误", "请输入MB数！")
 
     def get_int(self):
         if self.IpValue.text():
