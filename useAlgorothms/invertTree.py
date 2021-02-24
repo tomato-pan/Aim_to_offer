@@ -18,18 +18,15 @@ class Solution(object):
         self.invertTree(root.right)
         return root
 
-    def print_ord(self,root):
+    def print_ord(self, root):
         r = root
         root_r = root.right
         while root is not None:
             print(root.val)
-            root=root.left
+            root = root.left
             if root_r is not None:
                 print(root_r.val)
-                root_r=root_r.right
-
-
-
+                root_r = root_r.right
 
 
 if __name__ == '__main__':
