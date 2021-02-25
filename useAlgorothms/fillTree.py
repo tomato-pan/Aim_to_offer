@@ -8,11 +8,10 @@ class TreeNode:
 
 
 class Solution(object):
-    def fillTree(self, root):
+    def connect(self, root):
         if root is None: return None
         self.connectTwo(root.left, root.right)
         return root
-
     def connectTwo(self, node1, node2):
         # connect two nodes
         if node1 is None or node2 is None: return
