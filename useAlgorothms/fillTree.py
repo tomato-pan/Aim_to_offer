@@ -14,6 +14,7 @@ class Solution(object):
         return root
 
     def connectTwo(self, node1, node2):
+        # connect two nodes
         if node1 is None or node2 is None: return
         node1.next = node2
         self.connectTwo(node1.left, node1.right)
