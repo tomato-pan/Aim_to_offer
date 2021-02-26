@@ -1,11 +1,11 @@
 # package problem
 
 
-def dp_package(volume, size):
+def dp_package(volume):
     weight = [1, 3, 4]
     value = [1500, 2000, 3000]
+    size = len(value)
     dp = [[0 for i in range(volume + 1)] for k in range(size + 1)]
-    print(dp)
     for i in range(1,size + 1):
         for j in range(1,volume + 1):
             if weight[i-1] <= j:
@@ -33,15 +33,14 @@ def dp_lcs(str1,str2):
                     lcs+=str1[i]
             else:
                 dp[i][j]=max(dp[i-1][j],dp[i][j-1])
-    for j in dp:
-        print(j)
+    # for j in dp:
+        # print(j)
     print(lcs)
     return dp
 
 
 
 if __name__ == '__main__':
-    volume = 4
-    n = 3
-    dp = dp_package(volume, n)
+    volume = 5
+    dp = dp_package(volume)
     dp2 = dp_lcs("bluess","cluess")
