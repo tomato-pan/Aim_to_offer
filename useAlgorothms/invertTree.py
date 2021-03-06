@@ -32,8 +32,8 @@ class Solution(object):
     def print_pre_ord1(self, root):
         if root is None: return
         print(root.val)
-        self.print_ord1(root.left)
-        self.print_ord1(root.right)
+        self.print_pre_ord1(root.left)
+        self.print_pre_ord1(root.right)
         return root
 
 
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     root.right.right = TreeNode(val=9)
     solution = Solution()
     invert = solution.invertTree(root)
-    solution.print_ord1(invert)
+    solution.print_pre_ord1(invert)
     print(invert)
