@@ -11,12 +11,11 @@ class ListNode:
 class Solution:
     # 时间复杂度 2N--> O(N),空间 O(N)
     def reversePrint(self, head: ListNode) -> List[int]:
-        a, res = [], []
+        a = []
         while head:
             a.append(head.val)
             head = head.next
-        a.reverse()
-        return a
+        return a[::-1]
 
     # 递归  时间空间还不如上述迭代？
     def reversePrint1(self, head: ListNode) -> List[int]:
@@ -36,4 +35,4 @@ if __name__ == '__main__':
     t1.next = ListNode(3)
     t1.next.next = ListNode(2)
     s = Solution()
-    print(s.reversePrint1(t1))
+    print(s.reversePrint(t1))
