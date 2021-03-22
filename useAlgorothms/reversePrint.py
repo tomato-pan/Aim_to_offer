@@ -20,14 +20,32 @@ class Solution:
     # 递归  时间空间还不如上述迭代？
     def reversePrint1(self, head: ListNode) -> List[int]:
         a = []
+
         def rever(root):
             if root:
                 rever(root.next)
                 a.append(root.val)
             else:
                 return
+
         rever(head)
         return a
+
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head == None:
+            return head
+        p = None
+        while head:
+            q = head  # 暂存后继节点至q存在head
+            head = q.next  # 下一个节点
+            q.next = p  # 修改next引用
+            p = q
+        head = p
+        return head
 
 
 if __name__ == '__main__':

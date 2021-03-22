@@ -20,16 +20,20 @@ class Solution(object):
         self.connectTwo(node2.left, node2.right)
         self.connectTwo(node1.right, node2.left)
 
+    def connect2(self, root):
+        if root is None: return None
+        self.connectTwo(root.left, root.right)
+        return root
 
 if __name__ == '__main__':
-    root = TreeNode(val=4)
+    root = TreeNode(val=1)
     root.left = TreeNode(val=2)
-    root.left.left = TreeNode(val=1)
-    root.left.right = TreeNode(val=3)
-    root.right = TreeNode(val=7)
-    root.right.left = TreeNode(val=6)
-    root.right.right = TreeNode(val=9)
+    root.left.left = TreeNode(val=4)
+    root.left.right = TreeNode(val=5)
+    root.right = TreeNode(val=3)
+    root.right.left = None
+    root.right.right = TreeNode(val=7)
     solution = Solution()
-    invert = solution.invertTree(root)
-    solution.print_pre_ord1(invert)
+    invert = solution.connect(root)
     print(invert)
+
