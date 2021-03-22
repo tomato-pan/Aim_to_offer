@@ -18,7 +18,7 @@ class Solution:
         m, n = len(staple), len(drinks)
         res, i, j = 0, 0, n - 1
         while i < m and j >= 0:
-            if staple[i] + drinks[j] <= x:  # 两者价值只和不大于x：
+            if staple[i] + drinks[j] <= x:  # 两者之和不大于x：
                 res += j + 1
                 i += 1
             else:
