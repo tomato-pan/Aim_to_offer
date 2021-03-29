@@ -1,9 +1,10 @@
 from datetime import datetime
+from typing import Dict, Any, Type
+
 from pydantic import ValidationError
 from pydantic.dataclasses import dataclass
 from enum import Enum
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, Field,PositiveInt
 
 class MyConfig:
     max_anystr_length = 10
@@ -53,4 +54,31 @@ class MainModel(BaseModel):
 
     class Config:
         title = "main"
-print(MainModel.schema_json(indent=2))
+# print(MainModel.schema_json(indent=2))
+
+# class Model(BaseModel):
+#     # Here both constraints will be applied and the schema
+#     # will be generated correctly
+#     foo: int = Field(..., gt=0, lt=10)
+#
+# print(Model.schema())
+class Person(BaseModel):
+    name: str
+    age: int
+
+    class Config:
+        # schema_extra = {
+        #     'examples': [
+        #         {
+        #             'name': 'John Doe',
+        #             'age': 25,
+        #         }
+        #     ]
+        # }
+        @staticmethod
+        def schema_extra(schema: Dict[str, Any], model: Type['Person']) -> None:
+            for prop in schema.get('properties', {}).values():
+                prop.pop('title', None)
+
+
+print(Person.schema_json(indent=2))
