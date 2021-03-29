@@ -1,5 +1,6 @@
 from typing import Generic, TypeVar, Optional, List
-
+from datetime import datetime
+from pydantic.dataclasses import dataclass
 from pydantic import BaseModel, validator, ValidationError
 from pydantic.generics import GenericModel
 DataT = TypeVar("DataT")
@@ -39,3 +40,4 @@ try:
     Response[int](data='value')
 except ValidationError as e:
     print(e)
+
