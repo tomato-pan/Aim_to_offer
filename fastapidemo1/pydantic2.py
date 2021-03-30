@@ -1,6 +1,5 @@
 from datetime import datetime
 from typing import Dict, Any, Type
-
 from pydantic import ValidationError
 from pydantic.dataclasses import dataclass
 from enum import Enum
