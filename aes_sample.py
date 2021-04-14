@@ -37,5 +37,5 @@ class AesSample(object):
 if __name__ == '__main__':
     blog = AesSample()
     blog.test()
-    a = json.dumps({'org': 'panj', 'username': 'panj_api', 'system': 1, 'systemName': 'ONEPLUS A3010 9(64)', 'virtualAddr': '111.123.123.4', 'version': '2.0.0', 'flystoneId': 264233, 'action': '1', 'status': '1', 'content': 'success', 't': 1617852057, 'deviceId': '95cf614b78c4da245a5fe750900a3a69'})
+    a = json.dumps('{"a":123,"b":222}')
     print(a)
