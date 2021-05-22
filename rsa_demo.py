@@ -1,64 +1,105 @@
+import json
+
+from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
 from Crypto.PublicKey import RSA
-import Crypto.Cipher.PKCS1_v1_5 as cipher
+import base64
 
+class RsaDemo():
+    def _rsa_decrypt(priv_key_str, msg):
+        """
+        静态方法，根据私钥解密字符串
+        :param priv_key_str: 私钥完整
+        :param msg: 公钥加密字符串
+        :return:
+        """
+        msg = base64.b64decode(msg)
+        length = len(msg)
+        default_length = 128
+        # 私钥解密
+        priobj = Cipher_pkcs1_v1_5.new(RSA.importKey(priv_key_str))
+        # 长度不用分段
+        if length < default_length:
+            return b''.join(priobj.decrypt(msg, b' '))
+        # 需要分段
+        offset = 0
+        res = []
+        while length - offset > 0:
+            if length - offset > default_length:
+                res.append(priobj.decrypt(msg[offset:offset + default_length], b' '))
+            else:
+                res.append(priobj.decrypt(msg[offset:], b' '))
+            offset += default_length
 
-def generate_key(bits):
-    '''
-    :param bits: the length of RSA key
-    :return: RSAKey object
-    '''
+        return b''.join(res)
 
+    def _rsa_encrypt(pub_key_str, msg):
+        """
+        静态方法,根据公钥加密字符串
+        :param pub_key_str: 公钥完整
+        :param msg: 待加密json文本
+        :return:
+        """
+        msg = msg.encode('utf-8')
+        length = len(msg)
+        default_length = 117
+        # default_length = 100
+        # 公钥加密
+        pubobj = Cipher_pkcs1_v1_5.new(RSA.importKey(pub_key_str))
+        # 长度不用分段
+        if length < default_length:
+            return base64.b64encode(pubobj.encrypt(msg))
+        # 需要分段
+        offset = 0
+        res = []
+        while length - offset > 0:
+            if length - offset > default_length:
+                res.append(pubobj.encrypt(msg[offset:offset + default_length]))
+            else:
+                res.append(pubobj.encrypt(msg[offset:]))
+            offset += default_length
+        byte_data = b''.join(res)
 
-    return RSA.generate(bits)
+        return base64.b64encode(byte_data)
 
+    def rsa_decrypt(self, msg):
+        """
+        解密文本到b’二进制值
+        :param msg:
+        :return:
+        """
+        return self._rsa_decrypt(self.get_private_key(), msg)
 
-def encrypt(message, pk):
-    '''
-    :param message: the message would be encrypted
-    :param pk: the public key
-    :return: a cipher text for the message though encrypt
-    :rtype: bytes
-    '''
+    def rsa_decrypt2str(self, msg):
+        """
+        获取解密文本
+        :param msg: 加密后的文本
+        :return:
+        """
+        return self.rsa_decrypt(msg).decode("utf-8")  # 解密成byte并转为utf-8字符串
 
+    def rsa_decrypt2dict(self, msg):
+        """
+        获取解密json文本到dict
+        :param msg: 加密后的文本
+        :return:
+        """
+        return json.loads(self.rsa_decrypt2str(msg))  # 得到传输过来的数据的dict
 
-    cipher_obj = cipher.new(RSA.importKey(pk))
-    org_bytes = message.encode()
-    length_en = RSA.RsaKey.size_in_bytes(RSA.importKey(pk)) - 11  # 2048/8-11=245
+    def rsa_encrypt(self, msg, pub_key=None):
+        """
+        加密一段字符串变成 b'二进制
+        :param msg: 待加密文本
+        :param pub_key: 公钥，不填默认获取初始化的
+        :return:
+        """
+        pub_key = pub_key or self.get_public_key()
+        return self._rsa_encrypt(pub_key, msg)
 
-    res_en = b''
-    for i in range(0, len(org_bytes), length_en):
-        res_en += cipher_obj.encrypt(org_bytes[i: i + length_en])
-    cipher_text = res_en
-    return cipher_text
+    def rsa_encrypt2str(self, msg):
+        """
+        加密文本到文本
+        :param msg: 待加密文本
+        :return:
+        """
+        return self.rsa_encrypt(msg).decode("utf-8")  # 加密成待传输的字符串
 
-
-def decrypt(cipher_text, sk):
-    '''
-    :param message: the cipher text would be decrypted
-    :param pk: the private key
-    :return: a message for the cipher text though decrypt
-    :rtype: string
-    '''
-
-
-    cipher_obj = cipher.new(RSA.importKey(sk))
-    length_de = RSA.RsaKey.size_in_bytes(RSA.importKey(sk))
-
-    res_de = b''
-    for i in range(0, len(cipher_text), length_de):
-        res_de += cipher_obj.decrypt(cipher_text[i:i + length_de], 'DecryptError')  # for pkcs
-    plaint_text = res_de.decode()
-    return plaint_text
-
-if __name__ == "__main__":
-    key = generate_key(2048)  # 2048 is the length of RSA key
-    pk = key.publickey().export_key()  # for public key
-    sk = key.export_key()  # for private key
-
-    message = "We are different, work hard!" * 20
-    cipher_text = encrypt(message, pk)
-    print(cipher_text)
-    print(type(cipher_text))
-    plaint_text = decrypt(cipher_text, sk)
-    print(plaint_text)
-    print(message == plaint_text)
