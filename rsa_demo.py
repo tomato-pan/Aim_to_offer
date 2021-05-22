@@ -102,4 +102,3 @@ class RsaDemo():
         :return:
         """
         return self.rsa_encrypt(msg).decode("utf-8")  # 加密成待传输的字符串
-
