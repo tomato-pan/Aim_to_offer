@@ -5,8 +5,9 @@ from starlette.staticfiles import StaticFiles
 from starlette.requests import Request
 from typing import List
 import uvicorn
-
+from fastapidemo.router01 import app01
 app = FastAPI()
+app.include_router(app01,prefix="/find")
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
