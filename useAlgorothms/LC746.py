@@ -24,7 +24,7 @@ class Solution:
             return 0
         if len(cost) == 2:
             return min(cost)
-        self.dic[tuple(cost)] = min(cost[0]+self.minCostClimbingStairs(cost[1:]), cost[1] + self.minCostClimbingStairs(cost[2:])
+        self.dic[tuple(cost)] = min(cost[0]+self.minCostClimbingStairs(cost[1:]), cost[1] + self.minCostClimbingStairs(cost[2:]))
         return self.dic[tuple(cost)]
     # 优化前
     def minCostClimbingStairs(self, cost: List[int]) -> int:
@@ -48,3 +48,5 @@ if __name__ == '__main__':
     cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
     print(s.minCostClimbingStairs(cost))
     print(s.minCostClimbingStairs1(cost))
+    print(s.minCost(cost))
+    print(s.minCost1(cost))
