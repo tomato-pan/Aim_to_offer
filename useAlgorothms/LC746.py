@@ -7,6 +7,25 @@ from typing import List
 
 
 class Solution:
+    dic = {}
+    # 递归
+    def minCost(self, cost: List[int]) -> int:
+        if len(cost) == 1:
+            return 0
+        if len(cost) == 2:
+            return min(cost)
+        return min(cost[0] + self.minCostClimbingStairs(cost[1:]), cost[1] + self.minCostClimbingStairs(cost[2:]))
+
+    # 记忆搜索法
+    def minCost1(self, cost: List[int]) -> int:
+        if tuple(cost) in self.dic:
+            return self.dic[tuple(cost)]
+        if len(cost) == 1:
+            return 0
+        if len(cost) == 2:
+            return min(cost)
+        self.dic[tuple(cost)] = min(cost[0]+self.minCostClimbingStairs(cost[1:]), cost[1] + self.minCostClimbingStairs(cost[2:])
+        return self.dic[tuple(cost)]
     # 优化前
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         n = len(cost)
