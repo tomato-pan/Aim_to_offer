@@ -6,8 +6,8 @@ from starlette.requests import Request
 from typing import List
 import uvicorn
 from fastapidemo.router01 import app01
+from fastapidemo.router1 import api_router
 app = FastAPI()
-app.include_router(app01,prefix="/find")
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -60,7 +60,7 @@ async def main(request: Request):
 # @app.get("/")
 # async def main(request: Request):
 #     return templates.TemplateResponse("filepost.html", {"request": request})
-
+app.include_router(api_router)
 
 if __name__ == '__main__':
     # 必须是模块名下的app
