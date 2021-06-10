@@ -8,6 +8,7 @@ from typing import List
 
 class Solution:
     dic = {}
+
     # 递归
     def minCost(self, cost: List[int]) -> int:
         if len(cost) == 1:
@@ -24,22 +25,25 @@ class Solution:
             return 0
         if len(cost) == 2:
             return min(cost)
-        self.dic[tuple(cost)] = min(cost[0]+self.minCostClimbingStairs(cost[1:]), cost[1] + self.minCostClimbingStairs(cost[2:]))
+        self.dic[tuple(cost)] = min(cost[0] + self.minCostClimbingStairs(cost[1:]),
+                                    cost[1] + self.minCostClimbingStairs(cost[2:]))
         return self.dic[tuple(cost)]
+
     # 优化前
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         n = len(cost)
-        dp= [0]*(n+1)
-        for i in range(2,n+1):
-            dp[i]= min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2])
+        dp = [0] * (n + 1)
+        for i in range(2, n + 1):
+            dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
         return dp[n]
+
     # 优化后
     def minCostClimbingStairs1(self, cost: List[int]) -> int:
         n = len(cost)
-        prev=cur = 0
-        for i in range(2,n+1):
-            next = min(cur + cost[i-1],prev + cost[i-2])
-            prev ,cur = cur,next
+        prev = cur = 0
+        for i in range(2, n + 1):
+            next = min(cur + cost[i - 1], prev + cost[i - 2])
+            prev, cur = cur, next
         return cur
 
 

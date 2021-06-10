@@ -12,9 +12,7 @@ class Solution:
         sqrt5 = math.sqrt(5)
         finb = math.pow((1+sqrt5)/2,n+1)- math.pow((1-sqrt5)/2,n+1)
         return int(finb/sqrt5)
-    def islegal(self, name:str) -> str:
 
-        return int(finb/sqrt5)
 if __name__ == '__main__':
 
     s = Solution()
