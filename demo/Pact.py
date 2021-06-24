@@ -1,5 +1,5 @@
 import json
-from PactVerify import *
+from demo.PactVerify import *
 
 
 class PactVerify:

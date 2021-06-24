@@ -368,7 +368,8 @@ class PactVerifyError(Exception):
 
 if __name__ == '__main__':
     # 定义契约格式
-    import Pact
+    from demo import Pact
+
     expect_format = Matcher({
         'code': 0,  # code key存在,值相等,code==0
         'msg': 'success',  # msg key存在,值相等,msg=='success'
