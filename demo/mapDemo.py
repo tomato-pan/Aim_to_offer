@@ -3,7 +3,7 @@ import re
 from urllib import parse
 import time, random
 
-with open(r"C:\Users\95\Desktop\world_coordinate.txt", "r", encoding="utf-8") as f:
+with open(r"C:\Users\panj\Desktop\新数据(1).txt", "r", encoding="utf-8") as f:
     aaa = f.read()
 
 
