@@ -41,7 +41,7 @@ def main():
     # 百度ip
     ipTest = '61.135.169.121'
     # 可以切换的wifi
-    wifiList = ['802.1x',"lys5"]
+    wifiList = ['123213',"123213"]
     while True:
         current_wifi = get_current_wifi()
         print ("当前的wifi为：", current_wifi)
