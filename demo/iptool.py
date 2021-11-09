@@ -193,9 +193,22 @@ class Example(QWidget):
                 self.TintValue.clear()
         else:
             QMessageBox.critical(self, "错误", "请输入TInt！")
-
+import hashlib
+def get_file_md5(file_path):
+    """
+    获取文件md5值
+    :param file_path: 文件路径名
+    :return: 文件md5值
+    """
+    with open(file_path, 'rb') as f:
+        md5obj = hashlib.md5()
+        md5obj.update(f.read())
+        _hash = md5obj.hexdigest()
+    return str(_hash).lower(),len(str(_hash))
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec_())
+    # app = QApplication(sys.argv)
+    # ex = Example()
+    # sys.exit(app.exec_())
+    print(get_file_md5("f:/download/SecureLink-2.9.0-1035-1540-win-ia32.exe"))
+    print(get_file_md5("f:/download/SecureLink-2.9.0-1035-1540-win-x64.exe"))
