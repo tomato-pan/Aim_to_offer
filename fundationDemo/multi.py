@@ -12,6 +12,17 @@ def down_load(filename):
     print("%sfinish download，use %d seconds" % (filename, time_to_download))
 
 
+count = 0
+
+
+def sub_task(string):
+    global count
+    # 各输出10，因为每个子进程有自己独立内部空间，都含有一个count变量
+    while count<10:
+        print(string,end=",",flush=True)
+        count+=1
+        sleep(0.1)
+
 def main():
     start = time()
     p1 = Process(target=down_load, args=("Python for beginner.pdf",))
@@ -25,4 +36,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    Process(target=sub_task,args=("ping",)).start()
+    Process(target=sub_task,args=("pong",)).start()
