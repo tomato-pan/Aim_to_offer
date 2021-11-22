@@ -21,30 +21,11 @@ class SimpleCarFactory(object):
             return BMW()
 
 
-import abc
-class AbstractFactory(object):
-    """抽象工厂"""
-    __metaclass__ = abc.ABCMeta
-    @abc.abstractmethod
-    def product_car(self):
-        pass
-
-# class MercedesFactory(AbstractFactory):
-#     """梅赛德斯工厂
-#     """
-#     def product_car(self):
-#         return Mercedes()
-#
-# class BMWFactory(AbstractFactory):
-#     """宝马工厂
-#     """
-#     def product_car(self):
-#         return BMW()
-
 # 抽象工厂
 class Mercedes_C63(object):
     def __repr__(self):
         return "Mercedes-Benz:C63"
+
 class BMW_M3(object):
     """宝马 M3
     """
