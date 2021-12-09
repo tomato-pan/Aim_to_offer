@@ -13,8 +13,17 @@ class Solution:
         finb = math.pow((1+sqrt5)/2,n+1)- math.pow((1-sqrt5)/2,n+1)
         return int(finb/sqrt5)
 
-if __name__ == '__main__':
+    def count_sum(self,items:list):
+        overall = partial = items[0]
+        for i in range(1, len(items)):
+            partial = max(items[i], partial + items[i])
+            print(partial)
+            overall = max(partial, overall)
+        return overall
 
+if __name__ == '__main__':
+    list1 = [0,-2,1,-1,5,-3,2]
     s = Solution()
-    print(s.climbStairs(2))
-    print(s.climbStairs1(2))
+    # print(s.climbStairs(2))
+    # print(s.climbStairs1(2))
+    print(s.count_sum(list1))
