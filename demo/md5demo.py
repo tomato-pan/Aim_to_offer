@@ -15,6 +15,6 @@ def get_file_md5(fname):
 
 
 if __name__ == '__main__':
-    file_name = "F:\download\SecureLink-2.10.0-rc.3-1076-1650-win-x64.exe"
+    file_name = "F:\download\SecureLink-android.apk"
     file_md5 = get_file_md5(file_name)
     print(file_md5)
