@@ -24,6 +24,23 @@ class Solution:
         backtrack("", digits)
         return res
 
+    def back(self, digits: str) -> List[str]:
+
+        def backtrack(conbination, nextdigit):
+            if len(nextdigit) == 0:
+                res.append(conbination)
+            else:
+                for letter in digits:
+                    print(letter,digits)
+                    # if letter in nextdigit:continue
+                    backtrack(conbination + letter, nextdigit[1:])
+
+        res = []
+        backtrack("", digits)
+        print(len(res))
+        return res
+
+
 if __name__ == '__main__':
     s = Solution()
-    print(s.letterCombinations("234"))
+    print(s.back("234"))
