@@ -15,6 +15,6 @@ def get_file_md5(fname):
 
 
 if __name__ == '__main__':
-    file_name = "F:\download\SecureLink-2.12.0-1183-1852-win-ia32.exe"
+    file_name = "F:\download\云身份安全服务-2.14.0-1253-2066-win-x64.exe"
     file_md5 = get_file_md5(file_name)
     print(file_md5.upper())
